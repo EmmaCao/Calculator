@@ -47,15 +47,18 @@ class ViewController: UIViewController {
         }
     }
     
+    private var brain = CalculatorBrain()
+    
     @IBAction func touchSymbols(_ sender: UIButton) {
-        userIsInTyping = false
-        switch sender.currentTitle! {
-        case "π":
-            displayValue = Double.pi
-            case "√":
-            displayValue = sqrt(displayValue)
-        default:
-            break
+        if userIsInTyping{
+            brain.setOperand(displayValue)
+            userIsInTyping = false
+        }
+        if let mathematicalSymbol = sender.currentTitle{
+            brain.performOperation(mathematicalSymbol)
+        }
+        if let result = brain.result{
+            displayValue = result
         }
     }
 }
